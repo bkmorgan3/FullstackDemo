@@ -1,5 +1,6 @@
 const axios = require("axios");
 const fetch = require("node-fetch");
+const Pokemon = require("../models/pokemon");
 
 const pokeController = {};
 
@@ -15,6 +16,18 @@ pokeController.getPokemon =  (req, res, next) => {
         })
 
     
+}
+
+pokeController.makePokemon = (req, res, next) => {
+    Pokemon.create({name: req.body.name}, (err, poker) => {
+        if(err){
+            console.log(err)
+            return next({err: 'Error in makePokemon'})
+        } else {
+            console.log("pokemon created")
+            return next()
+        }
+    })
 }
 
 module.exports = pokeController;

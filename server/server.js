@@ -9,6 +9,8 @@ const PORT = 3000;
 const pokeController = require("./controllers/pokeController");
 const config = require("../config/keys");
 
+
+app.use(bodyParser.json())
 // setup mongoose
 mongoose.connect(config.MONGO_URI,() => {
     console.log("Connected to Mongoose")
@@ -22,6 +24,9 @@ app.get("/", (req, res) => {
 
 app.get("/pokemon", pokeController.getPokemon, (req,res) => {
     res.status(200).json(res.locals.data)
+});
+app.post("/pokemon", pokeController.makePokemon,(req, res) => {
+    res.status(200).json()
 })
 
 // Route handler for all routes not in our app
