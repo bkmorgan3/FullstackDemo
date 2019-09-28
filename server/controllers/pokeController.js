@@ -10,7 +10,7 @@ pokeController.getPokemon =  (req, res, next) => {
         .then(res => res.json())
         .then(data => {
             res.locals.data = data
-            console.log("incoming data",res.locals.data.name)
+            console.log(res.locals.data)
             return next()
         })
 

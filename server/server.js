@@ -1,13 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const axios = require('axios');
+const mongoose = require("mongoose");
 const path = require("path");
 
 const app = express();
 
 const PORT = 3000;
 const pokeController = require("./controllers/pokeController");
+const config = require("../config/keys");
 
+// setup mongoose
+mongoose.connect(config.MONGO_URI,() => {
+    console.log("Connected to Mongoose")
+})
 // serve static files from this directory 
 app.use("/public", express.static(path.join(__dirname,'../client/public')));
 // when serving the root route, response is the html file in the public folder used in the static use dec, above.
@@ -16,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/pokemon", pokeController.getPokemon, (req,res) => {
-    res.status(200).json(res.locals.data.name)
+    res.status(200).json(res.locals.data)
 })
 
 // Route handler for all routes not in our app
